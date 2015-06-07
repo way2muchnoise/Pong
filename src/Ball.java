@@ -19,12 +19,15 @@ public class Ball
     public void draw(Graphics g)
     {
         g.setColor(Color.BLACK);
-        g.fillOval(x, y, 10, 10);
+        g.fillOval(x, y, w, h);
     }
 
     public void spawn()
     {
-        this.angle = Math.random() * 1.57 + 0.78;
+        this.angle = Math.random() * 45;
+        if (angle > 43 && angle < 47)
+            this.angle += Math.random() * 2 - 1;
+        this.angle = Math.toRadians(angle +250);
         this.x = this.sX;
         this.y = this.sY;
         this.v = this.sV;
@@ -34,25 +37,32 @@ public class Ball
     {
         this.x += (int)Math.round(v * Math.sin(this.angle));
         this.y += (int)Math.round(v * Math.cos(this.angle));
+        double angleMod = this.angle%(Math.PI*2);
+        if (angleMod < 0) angleMod += (Math.PI*2);
+        double changeAngle = Math.PI - angleMod;
+        if (changeAngle == 0 || changeAngle == Math.PI)
+            changeAngle += (Math.random() *2 / 10)-1;
         if (this.y < top)
         {
             this.y = top;
-            this.angle -= 0.78;
+            if (angleMod < Math.PI) this.angle -= changeAngle;
+            else this.angle += changeAngle;
         }
-        if (this.y + this.h > bottom)
+        if (this.y > bottom)
         {
-            this.y = bottom - h;
-            this.angle -= 0.78;
+            this.y = bottom;
+            if (angleMod > Math.PI/2*3) this.angle += changeAngle-Math.PI;
+            else this.angle -= changeAngle-Math.PI;
         }
         if (left.impactR(this.x, this.y))
         {
-            this.x = left.x + this.w;
-            this.angle -= 0.78;
+            this.x = left.x + left.w;
+            this.angle = -angle;
         }
         if (right.impactL(this.x, this.y))
         {
-            this.x = right.x - this.w;
-            this.angle -= 0.78;
+            this.x = right.x - right.w;
+            this.angle = -angle;
         }
     }
 

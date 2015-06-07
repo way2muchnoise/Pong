@@ -77,6 +77,7 @@ public class GameFrame extends JFrame
 
     public void resetGame()
     {
+        input.reset();
         ball = new Ball(250, 250, 5, 0, windowHeight);
         ball.spawn();
         int rectHeight = 50;

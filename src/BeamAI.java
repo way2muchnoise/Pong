@@ -12,7 +12,7 @@ public class BeamAI extends Beam
     public void update(Ball ball, int move)
     {
         double random = r.nextGaussian();
-        if (random > 1 || random < -1) return;
+        if (random > 0.8 || random < -0.8) return;
         if (this.y + this.h/2 < ball.y) this.down(move);
         if (this.y + this.h/2 > ball.y) this.up(move);
     }
