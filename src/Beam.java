@@ -48,4 +48,9 @@ public class Beam
     {
         return x > this.x - this.w && y > this.y && y < this.y + this.h;
     }
+
+    public int distanceFromCenter(Ball ball)
+    {
+        return (this.y+this.h/2) - ball.y;
+    }
 }

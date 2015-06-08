@@ -2,7 +2,7 @@ import java.awt.*;
 
 public class Ball
 {
-    int sX, sY, sV, x, y, v, top, bottom;
+    int sX, sY, v, x, y, vX, vY, top, bottom;
     int h = 10;
     int w = 10;
     double angle;
@@ -11,7 +11,7 @@ public class Ball
     {
         this.sX = x;
         this.sY = y;
-        this.sV = v;
+        this.v = v;
         this.top = top;
         this.bottom = bottom;
     }
@@ -25,44 +25,36 @@ public class Ball
     public void spawn()
     {
         this.angle = Math.random() * 45;
-        if (angle > 43 && angle < 47)
-            this.angle += Math.random() * 2 - 1;
-        this.angle = Math.toRadians(angle +250);
+        this.angle = Math.toRadians(275);
         this.x = this.sX;
         this.y = this.sY;
-        this.v = this.sV;
+        this.vX = (int)Math.round(this.v * Math.sin(this.angle));
+        this.vY = (int)Math.round(this.v * Math.cos(this.angle));
     }
 
     public void update(Beam left, Beam right)
     {
-        this.x += (int)Math.round(v * Math.sin(this.angle));
-        this.y += (int)Math.round(v * Math.cos(this.angle));
-        double angleMod = this.angle%(Math.PI*2);
-        if (angleMod < 0) angleMod += (Math.PI*2);
-        double changeAngle = Math.PI - angleMod;
-        if (changeAngle == 0 || changeAngle == Math.PI)
-            changeAngle += (Math.random() *2 / 10)-1;
+        this.x += this.vX;
+        this.y += this.vY;
         if (this.y < top)
         {
             this.y = top;
-            if (angleMod < Math.PI) this.angle -= changeAngle;
-            else this.angle += changeAngle;
+            this.vY = -this.vY;
         }
         if (this.y > bottom)
         {
             this.y = bottom;
-            if (angleMod > Math.PI/2*3) this.angle += changeAngle-Math.PI;
-            else this.angle -= changeAngle-Math.PI;
+            this.vY = -this.vY;
         }
         if (left.impactR(this.x, this.y))
         {
             this.x = left.x + left.w;
-            this.angle = -angle;
+            this.vX = -this.vX;
         }
         if (right.impactL(this.x, this.y))
         {
             this.x = right.x - right.w;
-            this.angle = -angle;
+            this.vX = -this.vX;
         }
     }
 
