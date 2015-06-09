@@ -49,8 +49,8 @@ public class Beam
         return x > this.x - this.w && y > this.y && y < this.y + this.h;
     }
 
-    public int distanceFromCenter(Ball ball)
+    public double angleChange(Ball ball, int maxAngle)
     {
-        return (this.y+this.h/2) - ball.y;
+        return (((this.y + this.h/2) - ball.y)/(this.h/2))*Math.toRadians(maxAngle);
     }
 }

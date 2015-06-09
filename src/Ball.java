@@ -25,7 +25,7 @@ public class Ball
     public void spawn()
     {
         this.angle = Math.random() * 45;
-        this.angle = Math.toRadians(275);
+        this.angle = Math.toRadians(angle + 250);
         this.x = this.sX;
         this.y = this.sY;
         this.vX = (int)Math.round(this.v * Math.sin(this.angle));
@@ -50,11 +50,13 @@ public class Ball
         {
             this.x = left.x + left.w;
             this.vX = -this.vX;
+            this.vY += Math.cos(left.angleChange(this, 75));
         }
         if (right.impactL(this.x, this.y))
         {
             this.x = right.x - right.w;
             this.vX = -this.vX;
+            this.vY += Math.cos(right.angleChange(this, 75));
         }
     }
 
