@@ -51,6 +51,6 @@ public class Beam
 
     public double angleChange(Ball ball, int maxAngle)
     {
-        return (((this.y + this.h/2) - ball.y)/(this.h/2))*Math.toRadians(maxAngle);
+        return (((this.y + this.h/2F) - ball.y)/(this.h/2F))*Math.toRadians(maxAngle);
     }
 }

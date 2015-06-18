@@ -50,13 +50,13 @@ public class Ball
         {
             this.x = left.x + left.w;
             this.vX = -this.vX;
-            this.vY += Math.cos(left.angleChange(this, 75));
+            this.vY += Math.cos(left.angleChange(this, 90));
         }
         if (right.impactL(this.x, this.y))
         {
             this.x = right.x - right.w;
             this.vX = -this.vX;
-            this.vY += Math.cos(right.angleChange(this, 75));
+            this.vY -= Math.cos(right.angleChange(this, 90));
         }
     }
 
